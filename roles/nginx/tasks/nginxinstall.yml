@@ -1,0 +1,11 @@
+- name: add rpmnginx
+  yum: name=http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm state=present
+- name: install nginx
+  yum: name=nginx 
+- name: add nginx.conf
+  template: src=roles/nginx/templates/nginx.conf.j2 dest=/etc/nginx/nginx.conf
+- name: add nginx.default
+  template: src=roles/nginx/templates/default.j2 dest=/etc/nginx/conf.d/default
+  notify:
+    - restart nginx
+    - restart jenkins

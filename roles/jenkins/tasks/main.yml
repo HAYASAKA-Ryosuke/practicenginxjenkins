@@ -1,0 +1,12 @@
+- name: install javajdk
+  yum: name=java-1.7.0-openjdk state=latest
+- name: download jenkins
+  get_url: url=http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo dest=/etc/yum.repos.d/jenkins.repo
+- name: add the Jenkins repository
+  rpm_key: key=http://pkg.jenkins-ci.org/redhat-stable/jenkins-ci.org.key
+- name: install jenkins
+  yum: name=jenkins
+- name: configure jenkins root
+  lineinfile: dest=/etc/sysconfig/jenkins regexp='^JENKINS_ARGS=""' line='JENKINS_ARGS="--prefix=/jenkins -httpPort=${JENKINS_PORT} --ajp13Port=${JENKINS_AJP_PORT}"'
+- name: configure jenkins port
+  lineinfile: dest=/etc/sysconfig/jenkins regexp='^JENKINS_PORT="8080"' line='JENKINS_PORT="10080"'

@@ -1,0 +1,4 @@
+- name: restart nginx
+  action: /etc/init.d/nginx restart
+- name: restart jenkins
+  action: /etc/init.d/jenkins restart
